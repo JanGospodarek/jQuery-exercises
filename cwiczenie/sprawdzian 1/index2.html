@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #cont {
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+      .item {
+        width: 100%;
+        height: 40px;
+        background-color: lightblue;
+      }
+    </style>
+    <script src="../../lib/jquery.js"></script>
+    <script>
+      $(document).ready(() => {
+        $("form").on("submit", function (e) {
+          e.preventDefault();
+          const number = $("#number").val();
+          for (let index = 0; index < number; index++) {
+            const div = $("<div>");
+            div.addClass("item");
+            div.text(String(index));
+            $("#cont").append(div);
+          }
+        });
+        $("#delete").on("click", () => {
+          $("#cont").empty();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <form>
+      <input type="number" id="number" min="1" />
+      <button type="submit">utwórz</button>
+    </form>
+    <button id="delete">delete</button>
+    <div id="cont"></div>
+  </body>
+</html>

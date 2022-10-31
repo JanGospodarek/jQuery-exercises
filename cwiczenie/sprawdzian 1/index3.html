@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+      .lewo {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: grey;
+        top: 0;
+      }
+
+      .prawo {
+        height: 100%;
+        width: 49%;
+        position: fixed;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+        background-color: yellow;
+        right: 0;
+        float: left;
+      }
+
+      .srodek {
+        height: 100%;
+        width: 2%;
+        position: absolute;
+        top: 0;
+        left: 49%;
+        z-index: 1;
+        background-color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="lewo"></div>
+    <div class="srodek"></div>
+
+    <div class="prawo"></div>
+
+    <script>
+      $(document).ready(function () {
+        console.log(
+          "naciśnij klawisz f12 i zobacz konsolę, najlepiej w chrome"
+        );
+
+        $(".srodek").on("mousedown", function (e) {
+          $("html").on("mousemove", function (e) {
+            console.log("x: " + e.clientX);
+            let x = e.clientX - $(".lewo").offset().left;
+            let z = $("body").width();
+            $(".srodek").css({
+              position: "absolute",
+              left: e.pageX,
+              display: "block",
+            });
+
+            $(".prawo").width(z - x);
+            $(".lewo").width(x);
+          });
+        });
+        $(".srodek").on("mouseup", () => {
+          $("html").off("mousemove");
+        });
+      });
+    </script>
+  </body>
+</html>

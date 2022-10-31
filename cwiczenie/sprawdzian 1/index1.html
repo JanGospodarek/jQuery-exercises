@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #box {
+        width: 50px;
+        height: 50px;
+        background-color: red;
+      }
+      #cont {
+        width: 200px;
+        height: 200px;
+        background-color: silver;
+      }
+      #btn {
+        padding: 20px;
+        background-color: silver;
+      }
+    </style>
+    <script src="../../lib/jquery.js"></script>
+    <script>
+      $(document).ready(() => {
+        $("#scaleBtn").on("click", () => {
+          const conf = confirm("scale?");
+
+          conf ? $("#box").css("scale", "2.0") : $("#box").css("scale", "0.33");
+        });
+
+        ////
+        let add = true;
+        $("#btn").on("click", function () {
+          if (add) {
+            $(this).css("background", "red");
+            $("#cont").on("mouseover", function (e) {
+              $(this).css("background", "red");
+            });
+            $("#cont").on("mouseleave", function () {
+              $(this).css("background", "silver");
+            });
+            add = false;
+          } else {
+            $(this).css("background", "silver");
+            $("#cont").off("mouseover");
+            $("#cont").off("mouseleave");
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="scaleBtn">click</button>
+    <div id="box"></div>
+    <button id="btn">dodaj/usuń</button>
+    <div id="cont"></div>
+  </body>
+</html>
