@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #main {
+        background-color: blue;
+        width: 70%;
+        height: 80%;
+        position: absolute;
+        left: 20;
+        top: 20;
+      }
+      .planet {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: lightgray;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .rakieta {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(255, 0, 0, 0.3);
+        position: absolute;
+        top: 100px;
+        left: 100px;
+      }
+    </style>
+    <script src="../../lib/jquery.js"></script>
+    <script src="./script.js"></script>
+  </head>
+  <body>
+    <div id="options">
+      <button id="steps">Steps</button>
+      <button id="jumping">Jumping</button>
+      <button id="fly">Fly</button>
+      <label>kierunek</label>
+      <input type="checkbox" id="kierunek" />
+      <div id="main"></div>
+    </div>
+  </body>
+</html>
