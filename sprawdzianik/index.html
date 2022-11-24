@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      td {
+        border: 1px dotted blue;
+      }
+      .slider {
+        position: relative;
+        width: 500px;
+        height: 50px;
+        border-radius: 20px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .jajo {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <table id="table"></table>
+    <script>
+      $(document).ready(function () {
+        const table = $("#table");
+        const tab = [
+          { id: 1, name: "produkt", color: "lightblue", value: 90 },
+          { id: 2, name: "cena", color: "lightblue", value: 80 },
+          { id: 3, name: "liczba", color: "lightblue", value: 70 },
+          { id: 4, name: "wartosc", color: "lightblue", value: 40 },
+        ];
+        let mouse = false;
+        renderTable();
+        $(".slider").on("mousedown", () => (mouse = true));
+        $(".slider").on("mouseup", () => (mouse = false));
+        $(".slider").on("mousemove", (e) => {
+          if (!mouse) return;
+          const id = e.target.id.split("-")[1];
+          let val = e.clientX - $(`#slider-${id}`).offset().left;
+          //   if (val > 100) return;
+
+          tab[id - 1].value = Math.floor(val / 5);
+          renderValues();
+
+          renderSrednia(calcSrednia());
+        });
+        function renderTable() {
+          tab.forEach((el) => {
+            const tr = $("<tr>");
+            const firstTd = $("<td>").appendTo(tr);
+            const secondTd = $("<td>").appendTo(tr);
+            const thirdTd = $("<td>").appendTo(tr).attr("id", `val-${el.id}`);
+            firstTd.text(el.name);
+            const slider = generateSlider(el.id, el.color);
+            slider.append(generateJajco(el.id));
+            secondTd.append(slider);
+            thirdTd.text(el.value);
+            table.append(tr);
+          });
+          generateResult();
+          renderValues();
+
+          renderSrednia(calcSrednia());
+        }
+
+        function generateSlider(id, color) {
+          const div = $("<div>");
+          div.attr("class", "slider");
+          div.attr("id", `slider-${id}`);
+
+          div.css("background-color", color);
+          return div;
+        }
+
+        function generateJajco(id, color = "lightgreen") {
+          const div = $("<div>");
+          div.attr("class", "jajo");
+          div.attr("id", `ball-${id}`);
+
+          div.css("background-color", color);
+          return div;
+        }
+
+        function generateResult() {
+          const tr = $("<tr>");
+          const td = $("<td>").attr("colspan", 2).appendTo(tr);
+          td.append(
+            generateSlider("srednia", "green").append(generateJajco("srednia"))
+          );
+          table.append(tr);
+        }
+        function renderValues() {
+          tab.forEach((el) => {
+            if (el.value > 100 || el.value < 0) return;
+            $(`#ball-${el.id}`).css("left", `${el.value * 5 - 25}px`);
+            $(`#ball-${el.id}`).text(el.value);
+            $(`#val-${el.id}`).text(el.value);
+          });
+        }
+        function calcSrednia() {
+          let suma = 0;
+          tab.forEach((el) => {
+            suma += el.value;
+          });
+          return suma / tab.length;
+        }
+        function renderSrednia(val) {
+          if (val > 100 || val < 0) return;
+          $(`#ball-srednia`).css("left", `${val * 5 - 25}px`);
+          $(`#ball-srednia`).text(val);
+          val < 50
+            ? $(`#slider-srednia`).css("background-color", "red")
+            : $(`#slider-srednia`).css("background-color", "green");
+        }
+      });
+    </script>
+  </body>
+</html>
